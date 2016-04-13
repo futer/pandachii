@@ -296,6 +296,17 @@ var GameState={
 		{
 			this.cloths_background.destroy();
 			this.cloths.clicked = false;
+
+			this.clothsButton = [this.black_hat];
+			this.clothsText = [this.black_hatText];
+
+			for (i = 0; i < 4; i++) 
+    		{ 
+    			this.clothsButton[i].destroy();
+    			this.clothsText[i].destroy();
+			}
+
+
 		}
 		else
 		{
@@ -304,14 +315,18 @@ var GameState={
 			this.cloths.clicked = true;
 
 				this.black_hat = this.game.add.sprite(80, 480, 'black_hat');
-			    this.apple.anchor.setTo(0.5);
+			    this.black_hat.anchor.setTo(0.5);
+
+			    this.black_hat.inputEnabled = true;
+			    this.black_hat.events.onInputDown.add(this.clickOnActionClothsChange,this);
+			    this.black_hat.clicked = false;
+
 
 			    var hatstyle = { font: "10px Arial", fill: "#000"};
 
 			    this.black_hatText = this.game.add.text(66, 500, "Hat", hatstyle);
 
-			    //this.apple.inputEnabled = true;
-			    //this.apple.events.onInputDown.add(this.pickItem, this);	
+
 		}
 	},
 	
@@ -356,6 +371,22 @@ var GameState={
 
 			    this.tictactoeText = this.game.add.text(58, 500, "TicTacToe", gamestyle);
 			    this.PointtictactoeText = this.game.add.text(63, 510, "", gamestyle);
+		}
+	},
+
+	clickOnActionClothsChange: function()
+	{
+		if(this.black_hat.clicked)
+		{
+			this.black_hat.clicked = false;
+		}
+		else
+		{
+
+
+			//Here is the problem//
+			this.black_hat.clicked = true;
+
 		}
 	},
 
