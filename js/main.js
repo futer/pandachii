@@ -21,9 +21,11 @@ var GameState={
     this.game.load.image('bambooshoot', 'img/bambooshoot.png');
     this.game.load.image('lettuce', 'img/lettuce.png');
     this.game.load.image('tictactoe', 'img/tictactoe.png');
+    this.game.load.image('black_hat', 'img/black_hat.png');
 
 
     this.load.spritesheet('pet1', 'img/pet.png', 115, 140, 5);
+    this.load.spritesheet('pet_black_hat', 'img/pet_black_hat.png', 115, 173, 5);
   },
 
   create: function()
@@ -300,6 +302,16 @@ var GameState={
 			this.cloths_background = this.game.add.sprite(180,495,'cloths_background');
 			this.cloths_background.anchor.setTo(0.5);
 			this.cloths.clicked = true;
+
+				this.black_hat = this.game.add.sprite(80, 480, 'black_hat');
+			    this.apple.anchor.setTo(0.5);
+
+			    var hatstyle = { font: "10px Arial", fill: "#000"};
+
+			    this.black_hatText = this.game.add.text(66, 500, "Hat", hatstyle);
+
+			    //this.apple.inputEnabled = true;
+			    //this.apple.events.onInputDown.add(this.pickItem, this);	
 		}
 	},
 	
