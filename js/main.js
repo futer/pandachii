@@ -380,7 +380,7 @@ var GameState={
 		}
 	},
 
-	clickOnActionClothsChange: function()
+	clickOnActionClothsChangeHat: function()
 	{
 		if(this.black_hat.clicked)
 		{
@@ -394,8 +394,48 @@ var GameState={
 		}
 	},
 
-	clic
+	clickOnActionClothsChangeTie: function()
+	{
+		if(this.blue_tie.clicked)
+		{
+			this.pet.loadTexture('pet1');
+			this.blue_tie.clicked = false;
+		}
+		else
+		{
+			this.pet.loadTexture('pet_blue_tie');
+			this.blue_tie.clicked = false;
+		}
+	},
 
+	clickOnActionClothsChangePants: function()
+	{
+		if(this.blue_tie.clicked)
+		{
+			this.pet.loadTexture('pet1');
+			this.blue_tie.clicked = false;
+		}
+		else
+		{
+			this.pet.loadTexture('pet_blue_pants');
+			this.blue_tie.clicked = false;
+		}
+	},
+	
+	clickOnActionClothsChangeTshirt: function()
+	{
+		if(this.blue_tie.clicked)
+		{
+			this.pet.loadTexture('pet1');
+			this.blue_tie.clicked = false;
+		}
+		else
+		{
+			this.pet.loadTexture('pet_blue_tshirt');
+			this.blue_tie.clicked = false;
+		}
+	},
+	
 };
 
 var game = new Phaser.Game(360,640,Phaser.AUTO);
