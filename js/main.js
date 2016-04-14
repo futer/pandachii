@@ -22,10 +22,16 @@ var GameState={
     this.game.load.image('lettuce', 'img/lettuce.png');
     this.game.load.image('tictactoe', 'img/tictactoe.png');
     this.game.load.image('black_hat', 'img/black_hat.png');
+    this.game.load.image('blue_pants', 'img/blue_pants.png');
+    this.game.load.image('blue_shirt', 'img/blue_shirt.png');
+    this.game.load.image('blue_tie', 'img/blue_tie.png');
 
 
     this.load.spritesheet('pet1', 'img/pet.png', 115, 140, 5);
     this.load.spritesheet('pet_black_hat', 'img/pet_black_hat.png', 115, 173, 5);
+    this.load.spritesheet('pet_blue_pants', 'img/pet_blue_pants.png', 115, 140, 5);
+    this.load.spritesheet('pet_blue_tie', 'img/pet_blue_tie.png', 115, 140, 5);
+    this.load.spritesheet('pet_blue_tshirt', 'img/pet_blue_tshirt.png', 115, 140, 5);
   },
 
   create: function()
@@ -387,6 +393,8 @@ var GameState={
 			this.black_hat.clicked = true;
 		}
 	},
+
+	clic
 
 };
 
