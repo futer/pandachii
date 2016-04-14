@@ -3,7 +3,7 @@ var GameState={
   {
 
     this.game.load.image('backyard','img/backyard.png');
-    this.game.load.image('food_backgrounds', 'img/food_backgrounds.png');
+    this.game.load.image('food_backgrounds', 'img/food_backgrounds2.png');
     this.game.load.image('cloths_background', 'img/cloths_background.png');
     this.game.load.image('shop_background', 'img/shop_background.png');
     this.game.load.image('games_background', 'img/games_background.png');
@@ -280,7 +280,9 @@ var GameState={
 			    this.lettuce.events.onInputDown.add(this.pickItem, this);
 
 
-			    var foodstyle = { font: "10px Arial", fill: "#000"};
+			    var foodstyle = { font: "bold 8pt Arial", fill: "#000"};
+			     	foodstyle.stroke = "#fff";
+    			 	foodstyle.strokeThickness = 2;
 
 			    this.appleText = this.game.add.text(66, 500, "Apple", foodstyle);
 			    this.PriceappleText = this.game.add.text(63, 510, "PC: 50", foodstyle);
