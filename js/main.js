@@ -303,8 +303,8 @@ var GameState={
 			this.cloths_background.destroy();
 			this.cloths.clicked = false;
 
-			this.clothsButton = [this.black_hat];
-			this.clothsText = [this.black_hatText];
+			this.clothsButton = [this.black_hat, this.blue_pants, this.blue_tie, this.blue_shirt];
+			this.clothsText = [this.black_hatText, this.blue_pantsText, this.blue_tieText, this.blue_shirtText];
 
 			for (i = 0; i < 4; i++) 
     		{ 
@@ -320,17 +320,51 @@ var GameState={
 			this.cloths_background.anchor.setTo(0.5);
 			this.cloths.clicked = true;
 
+			var clothstyle = { font: "10px Arial", fill: "#000"};
+
+				//Black Hat
+
 				this.black_hat = this.game.add.sprite(80, 480, 'black_hat');
 			    this.black_hat.anchor.setTo(0.5);
 
 			    this.black_hat.inputEnabled = true;
-			    this.black_hat.events.onInputDown.add(this.clickOnActionClothsChange,this);
+			    this.black_hat.events.onInputDown.add(this.clickOnActionClothsChangeHat,this);
 			    this.black_hat.clicked = false;
 
+			    this.black_hatText = this.game.add.text(70, 500, "Hat", clothstyle);
 
-			    var hatstyle = { font: "10px Arial", fill: "#000"};
+			    //Blue Pants
 
-			    this.black_hatText = this.game.add.text(66, 500, "Hat", hatstyle);
+			    this.blue_pants = this.game.add.sprite(135,480, 'blue_pants');
+			    this.blue_pants.anchor.setTo(0.5);
+
+			    this.blue_pants.inputEnabled = true;
+			    this.blue_pants.events.onInputDown.add(this.clickOnActionClothsChangePants, this);
+			    this.blue_pants.clicked = false;
+
+			    this.blue_pantsText = this.game.add.text(110,500, 'Blue Pants', clothstyle);
+
+			    //Blue Tie
+
+			    this.blue_tie = this.game.add.sprite(200,480, 'blue_tie');
+			    this.blue_tie.anchor.setTo(0.5);
+
+			    this.blue_tie.inputEnabled = true;
+			    this.blue_tie.events.onInputDown.add(this.clickOnActionClothsChangeTie, this);
+			    this.blue_tie.clicked = false;
+
+			    this.blue_tieText = this.game.add.text(180,500, 'Blue Tie', clothstyle);
+
+			    //Blue T-Shirt
+
+			    this.blue_shirt = this.game.add.sprite(270, 480, 'blue_shirt');
+			    this.blue_shirt.anchor.setTo(0.5);
+
+			    this.blue_shirt.inputEnabled = true;
+			    this.blue_shirt.events.onInputDown.add(this.clickOnActionClothsChangeTshirt,this);
+			    this.blue_shirt.clicked = false;
+
+			    this.blue_shirtText = this.game.add.text(245,500, 'Blue T-Shirt', clothstyle);
 
 
 		}
@@ -371,7 +405,6 @@ var GameState={
 				this.tictactoe = this.game.add.sprite(80, 480, 'tictactoe');
 			    this.tictactoe.anchor.setTo(0.5);
 			    this.tictactoe.inputEnabled = true;
-			    //this.tictactoe.events.onInputDown.add(this, this);	
 
 			    var gamestyle = { font: "10px Arial", fill: "#000"};
 
@@ -404,35 +437,35 @@ var GameState={
 		else
 		{
 			this.pet.loadTexture('pet_blue_tie');
-			this.blue_tie.clicked = false;
+			this.blue_tie.clicked = true;
 		}
 	},
 
 	clickOnActionClothsChangePants: function()
 	{
-		if(this.blue_tie.clicked)
+		if(this.blue_pants.clicked)
 		{
 			this.pet.loadTexture('pet1');
-			this.blue_tie.clicked = false;
+			this.blue_pants.clicked = false;
 		}
 		else
 		{
 			this.pet.loadTexture('pet_blue_pants');
-			this.blue_tie.clicked = false;
+			this.blue_pants.clicked = true;
 		}
 	},
 	
 	clickOnActionClothsChangeTshirt: function()
 	{
-		if(this.blue_tie.clicked)
+		if(this.blue_shirt.clicked)
 		{
 			this.pet.loadTexture('pet1');
-			this.blue_tie.clicked = false;
+			this.blue_shirt.clicked = false;
 		}
 		else
 		{
 			this.pet.loadTexture('pet_blue_tshirt');
-			this.blue_tie.clicked = false;
+			this.blue_shirt.clicked = true;
 		}
 	},
 	
