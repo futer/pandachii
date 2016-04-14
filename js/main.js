@@ -378,15 +378,13 @@ var GameState={
 	{
 		if(this.black_hat.clicked)
 		{
+			this.pet.loadTexture('pet1');
 			this.black_hat.clicked = false;
 		}
 		else
 		{
-
-
-			//Here is the problem//
+			this.pet.loadTexture('pet_black_hat');
 			this.black_hat.clicked = true;
-
 		}
 	},
 
