@@ -1,4 +1,5 @@
 var GameState={
+
   preload: function()
   {
 
@@ -26,6 +27,10 @@ var GameState={
     this.game.load.image('blue_shirt', 'img/blue_shirt.png');
     this.game.load.image('blue_tie', 'img/blue_tie.png');
 
+    this.game.load.image('apple_count', 'img/apple_count.png');
+    this.game.load.image('bambooshoot_count', 'img/bambooshoot_count.png');
+    this.game.load.image('banana_count', 'img/banana_count.png');
+    this.game.load.image('lettuce_count', 'img/lettuce_count.png');
 
     this.load.spritesheet('pet1', 'img/pet.png', 115, 140, 5);
     this.load.spritesheet('pet_black_hat', 'img/pet_black_hat.png', 115, 173, 5);
@@ -46,7 +51,7 @@ var GameState={
     this.pet.anchor.setTo(0.5);
 
     //custom properties of the pet
-    this.pet.customParams = {health: 100, fun: 100, coin: 0};
+    this.pet.customParams = {health: 100, fun: 100, coin: 100};
 
     //draggable pet
     this.pet.inputEnabled = true;
@@ -134,9 +139,6 @@ var GameState={
 	      //clear other buttons
 	      this.clearSelection();
 
-	      //alpha to indicate selection
-	      //sprite.alpha = 0.4;
-
 	      //save selection so we can place an item
 	      this.selectedItem = sprite;
     	}
@@ -221,7 +223,6 @@ var GameState={
 
 	      this.game.time.events.add(2000, this.gameOver, this);
 	    }
-
 	},
 	
 	gameOver: function() 
@@ -237,15 +238,13 @@ var GameState={
     		this.food_background.destroy();
     		this.food3.clicked = false;
     		
-    		this.foodicon = [this.apple, this.banana, this.bambooshoot, this.lettuce];
-    		this.foodtext = [this.appleText, this.bananaText, this.bambooshootText, this.lettuceText];
-    		this.pcfood = [this.PriceappleText,this.PricebananaText, this.PricebambooshootText, this.PricelettuceText];
+    		this.foodicon = [this.apple_count, this.banana_count, this.bambooshoot_count, this.lettuce_count];
+    		this.foodtext = [this.appleText_count, this.bananaText_count, this.bambooshootText_count, this.lettuceText_count];
 
     		for (i = 0; i < 4; i++) 
     		{ 
     			this.foodicon[i].destroy();
     			this.foodtext[i].destroy();
-    			this.pcfood[i].destroy();
 			}
 
 		}
@@ -255,46 +254,43 @@ var GameState={
 	    	this.food_background.anchor.setTo(0.5);
 	    	this.food3.clicked = true; 
 
-	    	    this.apple = this.game.add.sprite(80, 480, 'apple');
-			    this.apple.anchor.setTo(0.5);
-			    this.apple.customParams = {health: 20, coin: -50};
-			    this.apple.inputEnabled = true;
-			    this.apple.events.onInputDown.add(this.pickItem, this);	
+				var countnuberstyle = { font: "bold 8pt Arial", fill: "#000"};
+			     	countnuberstyle.stroke = "#fff";
+    			 	countnuberstyle.strokeThickness = 2;
 
-			    this.banana = this.game.add.sprite(135,480, 'banana');
-			    this.banana.anchor.setTo(0.5);
-			    this.banana.customParams = { health: 15, coin: -40};
-			    this.banana.inputEnabled = true;
-			    this.banana.events.onInputDown.add(this.pickItem, this);
+	    	    this.apple_count = this.game.add.sprite(80, 480, 'apple_count');
+			    this.apple_count.anchor.setTo(0.5);
+			    this.apple_count.customParams = {health: 20, coin: -50};
+			    this.apple_count.inputEnabled = true;
+			    this.apple_count.events.onInputDown.add(this.pickItem, this);	
 
-			    this.bambooshoot = this.game.add.sprite(200,480, 'bambooshoot');
-			    this.bambooshoot.anchor.setTo(0.5);
-			    this.bambooshoot.customParams = { health: 10, coin: -30 };
-			    this.bambooshoot.inputEnabled = true;
-			    this.bambooshoot.events.onInputDown.add(this.pickItem, this);
+			    this.banana_count = this.game.add.sprite(135,480, 'banana_count');
+			    this.banana_count.anchor.setTo(0.5);
+			    this.banana_count.customParams = { health: 15, coin: -40};
+			    this.banana_count.inputEnabled = true;
+			    this.banana_count.events.onInputDown.add(this.pickItem, this);
 
-			    this.lettuce = this.game.add.sprite(270, 480, 'lettuce');
-			    this.lettuce.anchor.setTo(0.5);
-			    this.lettuce.customParams = {health: 50, coin: -60};
-			    this.lettuce.inputEnabled = true;
-			    this.lettuce.events.onInputDown.add(this.pickItem, this);
+			    this.bambooshoot_count = this.game.add.sprite(200,480, 'bambooshoot_count');
+			    this.bambooshoot_count.anchor.setTo(0.5);
+			    this.bambooshoot_count.customParams = { health: 10, coin: -30 };
+			    this.bambooshoot_count.inputEnabled = true;
+			    this.bambooshoot_count.events.onInputDown.add(this.pickItem, this);
+
+			    this.lettuce_count = this.game.add.sprite(270, 480, 'lettuce_count');
+			    this.lettuce_count.anchor.setTo(0.5);
+			    this.lettuce_count.customParams = {health: 50, coin: -60};
+			    this.lettuce_count.inputEnabled = true;
+			    this.lettuce_count.events.onInputDown.add(this.pickItem, this);
 
 
 			    var foodstyle = { font: "bold 8pt Arial", fill: "#000"};
 			     	foodstyle.stroke = "#fff";
     			 	foodstyle.strokeThickness = 2;
 
-			    this.appleText = this.game.add.text(66, 500, "Apple", foodstyle);
-			    this.PriceappleText = this.game.add.text(63, 510, "PC: 50", foodstyle);
-
-			    this.bananaText = this.game.add.text(115,500, "Banana", foodstyle);
-			    this.PricebananaText = this.game.add.text(117, 510, "PC: 40", foodstyle);
-
-			    this.bambooshootText = this.game.add.text(170,500, "Bamboo Shoot", foodstyle);
-			    this.PricebambooshootText = this.game.add.text(185, 510, "PC: 30", foodstyle);
-
-			    this.lettuceText = this.game.add.text(255,500, "Lettuce", foodstyle);
-			    this.PricelettuceText = this.game.add.text(256,510, "PC: 60", foodstyle);
+			    this.appleText_count = this.game.add.text(66, 500, "Apple", foodstyle);
+			    this.bananaText_count = this.game.add.text(115,500, "Banana", foodstyle);
+			    this.bambooshootText_count = this.game.add.text(170,500, "Bamboo Shoot", foodstyle);
+			    this.lettuceText_count = this.game.add.text(255,500, "Lettuce", foodstyle);
 		}
 	},
 
@@ -378,13 +374,135 @@ var GameState={
 		{
 			this.shop_background.destroy();
 			this.shop.clicked = false;
+
+    		this.foodiconShop = [this.apple, this.banana, this.bambooshoot, this.lettuce];
+    		this.foodtextShop = [this.appleText, this.bananaText, this.bambooshootText, this.lettuceText];
+    		this.pcfoodShop = [this.PriceappleText,this.PricebananaText, this.PricebambooshootText, this.PricelettuceText];
+
+    		for (i = 0; i < 4; i++) 
+    		{ 
+    			this.foodiconShop[i].destroy();
+    			this.foodtextShop[i].destroy();
+    			this.pcfoodShop[i].destroy();
+			}
+
 		}
 		else
 		{
 			this.shop_background = this.game.add.sprite(180,495,'shop_background');
 			this.shop_background.anchor.setTo(0.5);
 			this.shop.clicked = true;
+
+				this.apple = this.game.add.sprite(80, 480, 'apple');
+			    this.apple.anchor.setTo(0.5);
+			    this.apple.inputEnabled = true;
+			    this.apple.events.onInputDown.add(this.buyitems_apple, this);	
+
+			    this.banana = this.game.add.sprite(135,480, 'banana');
+			    this.banana.anchor.setTo(0.5);
+			    this.banana.inputEnabled = true;
+			    this.banana.events.onInputDown.add(this.buyitems_banana, this);
+
+			    this.bambooshoot = this.game.add.sprite(200,480, 'bambooshoot');
+			    this.bambooshoot.anchor.setTo(0.5);
+			    this.bambooshoot.inputEnabled = true;
+			    this.bambooshoot.events.onInputDown.add(this.buyitems_bambooshoot, this);
+
+			    this.lettuce = this.game.add.sprite(270, 480, 'lettuce');
+			    this.lettuce.anchor.setTo(0.5);
+			    this.lettuce.inputEnabled = true;
+			    this.lettuce.events.onInputDown.add(this.buyitems_lettuce, this);
+
+
+			    var foodstyle = { font: "bold 8pt Arial", fill: "#000"};
+			     	foodstyle.stroke = "#fff";
+    			 	foodstyle.strokeThickness = 2;
+
+			    this.appleText = this.game.add.text(66, 500, "Apple", foodstyle);
+			    this.PriceappleText = this.game.add.text(63, 510, "PC: 50", foodstyle);
+
+			    this.bananaText = this.game.add.text(115,500, "Banana", foodstyle);
+			    this.PricebananaText = this.game.add.text(117, 510, "PC: 40", foodstyle);
+
+			    this.bambooshootText = this.game.add.text(170,500, "Bamboo Shoot", foodstyle);
+			    this.PricebambooshootText = this.game.add.text(185, 510, "PC: 30", foodstyle);
+
+			    this.lettuceText = this.game.add.text(255,500, "Lettuce", foodstyle);
+			    this.PricelettuceText = this.game.add.text(256,510, "PC: 60", foodstyle);
+
 		}
+	},
+
+	buyitems_apple: function()
+	{
+		if(this.pet.customParams.coin >= 50)
+		{
+			this.pet.customParams.coin -= 50;
+			this.refreshStats();
+		}
+		else
+		{
+			var buyitemsText = {font: "bold 16pt Arial", fill: "#fff"};
+				buyitemsText.stroke = "#A4CED9";
+				buyitemsText.strokeThickness = 5;
+
+			this.PriceAppleBuyItems = this.game.add.text(80,100, "No coin for buy Apple", buyitemsText);
+		}
+
+	},
+
+	buyitems_banana: function()
+	{
+		if(this.pet.customParams.coin >= 40)
+		{
+			this.pet.customParams.coin -= 40;
+			this.refreshStats();
+		}
+		else
+		{
+			var buyitemsText = {font: "bold 16pt Arial", fill: "#fff"};
+				buyitemsText.stroke = "#A4CED9";
+				buyitemsText.strokeThickness = 5;
+
+			this.PriceBananaBuyItems = this.game.add.text(70,100, "No coin for buy Banana", buyitemsText);
+		}
+
+	},
+
+	buyitems_bambooshoot: function()
+	{
+		if(this.pet.customParams.coin >= 30)
+		{
+			this.pet.customParams.coin -= 30;
+			this.refreshStats();
+		}
+		else
+		{
+			var buyitemsText = {font: "bold 16pt Arial", fill: "#fff"};
+				buyitemsText.stroke = "#A4CED9";
+				buyitemsText.strokeThickness = 5;
+
+			this.PriceBambooshootBuyItems = this.game.add.text(30,100, "No coin for buy bamboo Shoot", buyitemsText);
+		}
+
+	},
+
+	buyitems_lettuce: function()
+	{
+		if(this.pet.customParams.coin >= 60)
+		{
+			this.pet.customParams.coin -= 60;
+			this.refreshStats();
+		}
+		else
+		{
+			var buyitemsText = {font: "bold 16pt Arial", fill: "#fff"};
+				buyitemsText.stroke = "#A4CED9";
+				buyitemsText.strokeThickness = 5;
+
+			this.PriceLettuceBuyItems = this.game.add.text(70,100, "No coin for buy Lettuce", buyitemsText);
+		}
+
 	},
 
 	clickOnActionGames: function()
