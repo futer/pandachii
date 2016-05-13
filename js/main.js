@@ -110,6 +110,8 @@ var GameState={
 
     //decrease health and fun every 10 seconds
     this.statsDecreaser = this.game.time.events.loop(Phaser.Timer.SECOND * 5, this.reduceProperties, this);
+
+
     this.statsDecreaser.timer.start();
     
     this.uiBlocked = false;
@@ -447,6 +449,13 @@ var GameState={
 				buyitemsText.strokeThickness = 5;
 
 			this.PriceAppleBuyItems = this.game.add.text(80,100, "No coin for buy Apple", buyitemsText);
+
+				this.game.add.tween(this.PriceAppleBuyItems)
+                .to({alpha: 0}, 1000, Phaser.Easing.Default, true, 3000)
+                .onComplete.add(function () {
+                        console.log("This is called when the tween is done.");
+                    }, this
+                );
 		}
 
 	},
@@ -465,6 +474,14 @@ var GameState={
 				buyitemsText.strokeThickness = 5;
 
 			this.PriceBananaBuyItems = this.game.add.text(70,100, "No coin for buy Banana", buyitemsText);
+				
+				this.game.add.tween(this.PriceBananaBuyItems)
+                .to({alpha: 0}, 1000, Phaser.Easing.Default, true, 3000)
+                .onComplete.add(function () {
+                        console.log("This is called when the tween is done.");
+                    }, this
+                );
+
 		}
 
 	},
@@ -483,6 +500,13 @@ var GameState={
 				buyitemsText.strokeThickness = 5;
 
 			this.PriceBambooshootBuyItems = this.game.add.text(30,100, "No coin for buy bamboo Shoot", buyitemsText);
+
+				this.game.add.tween(this.PriceBambooshootBuyItems)
+                .to({alpha: 0}, 1000, Phaser.Easing.Default, true, 3000)
+                .onComplete.add(function () {
+                        console.log("This is called when the tween is done.");
+                    }, this
+                );
 		}
 
 	},
@@ -501,6 +525,15 @@ var GameState={
 				buyitemsText.strokeThickness = 5;
 
 			this.PriceLettuceBuyItems = this.game.add.text(70,100, "No coin for buy Lettuce", buyitemsText);
+
+
+			this.game.add.tween(this.PriceLettuceBuyItems)
+                .to({alpha: 0}, 1000, Phaser.Easing.Default, true, 3000)
+                .onComplete.add(function () {
+                        console.log("This is called when the tween is done.");
+                    }, this
+                );
+
 		}
 
 	},
@@ -594,3 +627,6 @@ var GameState={
 var game = new Phaser.Game(360,640,Phaser.AUTO);
 game.state.add('GameState',GameState);
 game.state.start('GameState');
+
+
+
