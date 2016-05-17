@@ -57,12 +57,30 @@ var GameState={
     //custom properties of the pet
     this.pet.customParams = {health: 100, fun: 100, coin: 800};
 
-
 	var eating = this.pet.animations.add('eating', [0,1,0,1,0,1,0], 7, true);
 
     //draggable pet
     this.pet.inputEnabled = true;
     this.pet.input.enableDrag();
+
+
+
+
+    //Physxic add
+
+    this.game.physics.startSystem(Phaser.Physics.ARCADE);
+	this.game.physics.arcade.gravity.y = 100;
+
+	this.game.physics.enable( this.pet, Phaser.Physics.ARCADE);
+
+	this.game.world.setBounds(0, 0, 400, 450);
+
+    this.pet.body.collideWorldBounds = true;
+    this.pet.body.bounce.y = 0.4;
+    this.pet.body.gravity.y = 200;
+
+
+    //button for food
 	    	
     this.food3 = this.game.add.sprite(72,570,'food');
     this.food3.anchor.setTo(0.5);
@@ -180,6 +198,26 @@ var GameState={
 			this.restartBackgrund.inputEnabled = true;
 	    	this.restartBackgrund.events.onInputDown.add(this.gameOver,this);
 	    }
+
+	    var flaga = false;
+	    var flaga2 = false;
+
+	    if( this.pet.y < 160)
+	    {	
+	    	flaga = true;
+	    	if (this.pet.y < 440)
+	    	{
+	    		flaga2 = true;
+	    	}
+	    }
+
+
+
+    	if (flaga2)
+    	{
+			this.pet.customParams.fun += 20;  	
+		}
+
 	},
 	
 	gameOver: function() 
