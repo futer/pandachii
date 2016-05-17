@@ -427,13 +427,12 @@ var GameState={
 
 	buyitems_apple: function()
 	{
+		var buyitemsText = {font: "bold 16pt Arial", fill: "#fff"};
+			buyitemsText.stroke = "#A4CED9";
+			buyitemsText.strokeThickness = 5;
+
 		if(this.pet.customParams.coin >= 50)
 		{
-
-			var buyitemsText = {font: "bold 16pt Arial", fill: "#fff"};
-				buyitemsText.stroke = "#A4CED9";
-				buyitemsText.strokeThickness = 5;
-
 			if(number_of_apple < 9)
 			{
 				this.pet.customParams.coin -= 50;
