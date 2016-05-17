@@ -110,7 +110,7 @@ var GameState={
 
 
     //decrease health and fun every 1 seconds
-    this.statsDecreaser = this.game.time.events.loop(Phaser.Timer.SECOND * 1, this.reduceProperties, this);
+    this.statsDecreaser = this.game.time.events.loop(Phaser.Timer.SECOND * 5, this.reduceProperties, this);
 
 
     this.statsDecreaser.timer.start();
@@ -237,8 +237,6 @@ var GameState={
 
 		if(!this.restartBackgrund.clicked)
 		{
-			//this.restartBackgrund = this.game.add.sprite(482,220, 'restartBackgrund');
-
 			this.game.state.restart();
 		}
 
@@ -274,6 +272,8 @@ var GameState={
 			     	countnuberstyle.stroke = "#fff";
     			 	countnuberstyle.strokeThickness = 2;
 
+				var countnuberstyle_number = { font: "bold 8pt Arial", fill: "#000"};
+
 	    	    this.apple_count = this.game.add.sprite(80, 480, 'apple_count');
 			    this.apple_count.anchor.setTo(0.5);
 			    this.apple_count.customParams = {health: 20, coin: -50};
@@ -298,6 +298,15 @@ var GameState={
 			    this.lettuce_count.inputEnabled = true;
 			    this.lettuce_count.events.onInputDown.add(this.pickItem, this);
 
+			    var number_of_apple = 0;
+  				var number_of_banana = 0;
+  				var number_of_bamboshoot = 0;
+  				var number_of_lettuce = 0;
+
+  				this.number_of_apple_text = this.game.add.text(84,480, "" + number_of_apple, countnuberstyle_number);
+  				this.number_of_banana_text = this.game.add.text(139,481, "" + number_of_banana, countnuberstyle_number);
+  				this.number_of_bamboshoot_text = this.game.add.text(204,481, "" + number_of_bamboshoot, countnuberstyle_number);
+  				this.nnumber_of_lettuce_text = this.game.add.text(274,481, "" + number_of_lettuce, countnuberstyle_number);
 
 			    var foodstyle = { font: "bold 8pt Arial", fill: "#000"};
 			     	foodstyle.stroke = "#fff";
