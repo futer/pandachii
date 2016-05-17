@@ -8,6 +8,7 @@ var GameState={
     this.game.load.image('cloths_background', 'img/cloths_background.png');
     this.game.load.image('shop_background', 'img/shop_background.png');
     this.game.load.image('games_background', 'img/games_background.png');
+    this.game.load.image('restartBackgrund', 'img/restert_background.png');
 
     this.game.load.image('panda','img/panda_small.gif');
     this.game.load.image('hearth','img/hearth.png');
@@ -108,14 +109,13 @@ var GameState={
 
 
 
-    //decrease health and fun every 10 seconds
-    this.statsDecreaser = this.game.time.events.loop(Phaser.Timer.SECOND * 5, this.reduceProperties, this);
+    //decrease health and fun every 1 seconds
+    this.statsDecreaser = this.game.time.events.loop(Phaser.Timer.SECOND * 1, this.reduceProperties, this);
 
 
     this.statsDecreaser.timer.start();
     
     this.uiBlocked = false;
-
 
 
     },
@@ -218,18 +218,32 @@ var GameState={
 
 	    if(this.pet.customParams.health <= 0 || this.pet.customParams.fun <= 0) 
 	    {
-	      this.pet.customParams.health = 0;
-	      this.pet.customParams.fun = 0;
-	      this.pet.frame = 4;
-	      this.uiBlocked = true;
+	     	this.pet.customParams.health = 0;
+	    	this.pet.customParams.fun = 0;
+	    	this.pet.frame = 4;
+	    	this.uiBlocked = true;
 
-	      this.game.time.events.add(2000, this.gameOver, this);
+	    	this.restartBackgrund = this.game.add.sprite(82,220, 'restartBackgrund');
+			this.restartBackgrund.clicked = false;
+			this.restartBackgrund.inputEnabled = true;
+	    	this.restartBackgrund.events.onInputDown.add(this.gameOver,this);
+
+	    	//this.game.time.events.add(2000, this.gameOver, this);
 	    }
 	},
 	
 	gameOver: function() 
 	{    
-    this.game.state.restart();
+
+		if(!this.restartBackgrund.clicked)
+		{
+			//this.restartBackgrund = this.game.add.sprite(482,220, 'restartBackgrund');
+
+			this.game.state.restart();
+		}
+
+
+
     },
 
 
@@ -451,11 +465,7 @@ var GameState={
 			this.PriceAppleBuyItems = this.game.add.text(80,100, "No coin for buy Apple", buyitemsText);
 
 				this.game.add.tween(this.PriceAppleBuyItems)
-                .to({alpha: 0}, 1000, Phaser.Easing.Default, true, 3000)
-                .onComplete.add(function () {
-                        console.log("This is called when the tween is done.");
-                    }, this
-                );
+                .to({alpha: 0}, 1000, Phaser.Easing.Default, true, 3000);
 		}
 
 	},
@@ -476,11 +486,7 @@ var GameState={
 			this.PriceBananaBuyItems = this.game.add.text(70,100, "No coin for buy Banana", buyitemsText);
 				
 				this.game.add.tween(this.PriceBananaBuyItems)
-                .to({alpha: 0}, 1000, Phaser.Easing.Default, true, 3000)
-                .onComplete.add(function () {
-                        console.log("This is called when the tween is done.");
-                    }, this
-                );
+                .to({alpha: 0}, 1000, Phaser.Easing.Default, true, 3000);
 
 		}
 
@@ -502,11 +508,7 @@ var GameState={
 			this.PriceBambooshootBuyItems = this.game.add.text(30,100, "No coin for buy bamboo Shoot", buyitemsText);
 
 				this.game.add.tween(this.PriceBambooshootBuyItems)
-                .to({alpha: 0}, 1000, Phaser.Easing.Default, true, 3000)
-                .onComplete.add(function () {
-                        console.log("This is called when the tween is done.");
-                    }, this
-                );
+                .to({alpha: 0}, 1000, Phaser.Easing.Default, true, 3000);
 		}
 
 	},
@@ -528,11 +530,7 @@ var GameState={
 
 
 			this.game.add.tween(this.PriceLettuceBuyItems)
-                .to({alpha: 0}, 1000, Phaser.Easing.Default, true, 3000)
-                .onComplete.add(function () {
-                        console.log("This is called when the tween is done.");
-                    }, this
-                );
+                .to({alpha: 0}, 1000, Phaser.Easing.Default, true, 3000);
 
 		}
 
