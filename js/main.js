@@ -1,3 +1,8 @@
+var number_of_apple = 0;
+var number_of_banana = 1;
+var number_of_bamboshoot = 1;
+var number_of_lettuce = 1;
+
 var GameState={
 
   preload: function()
@@ -52,7 +57,7 @@ var GameState={
     this.pet.anchor.setTo(0.5);
 
     //custom properties of the pet
-    this.pet.customParams = {health: 100, fun: 100, coin: 100};
+    this.pet.customParams = {health: 100, fun: 100, coin: 800};
 
     //draggable pet
     this.pet.inputEnabled = true;
@@ -132,72 +137,27 @@ var GameState={
 	    this.healthText.text = this.pet.customParams.health;
 	    this.funText.text = this.pet.customParams.fun;
 	    this.coinText.text = this.pet.customParams.coin;
+
 	},
 
- 	pickItem: function(sprite, event) 
+ 	pickItem: function() 
   	{
-    if(!this.uiBlocked) 
-    	{
-	      //clear other buttons
-	      this.clearSelection();
 
-	      //save selection so we can place an item
-	      this.selectedItem = sprite;
-    	}
+
+
   	},
 
-	placeItem: function(sprite, event) 
+
+
+	placeItem: function() 
 	{
-	    if(this.selectedItem && !this.uiBlocked) {
-	      //position of the user input
-	      var x = event.position.x;
-	      var y = event.position.y;
 
-	      //create element in this place
-	      var newItem = this.game.add.sprite(x, y, this.selectedItem.key);
-	      newItem.anchor.setTo(0.5);
-	      newItem.customParams = this.selectedItem.customParams;
-
-	      //the pet will move to grab the item
-	      this.uiBlocked = true;
-	      var petMovement = game.add.tween(this.pet);
-	      petMovement.to({x: x, y: y}, 700);
-	      petMovement.onComplete.add(function(){
-	        this.uiBlocked = false;
-
-	        //destroy item
-	        newItem.destroy();
-
-	        //animate pet
-	        this.pet.animations.play('eating');
-
-	        //update pet stats
-	        var stat;
-	        for(stat in newItem.customParams) {
-	          //make sure the property belongs to the object and not the prototype
-	          if(newItem.customParams.hasOwnProperty(stat)) {
-	            this.pet.customParams[stat] += newItem.customParams[stat];
-	          }
-	        }
 	        
 	        //show updated stats
 	        this.refreshStats();
 
-	        //clear selection
-	        this.clearSelection();
-	      }, this);
-	      petMovement.start();      
-	    }
-	  },
-
-	clearSelection: function() 
-	{
-	    //set alpha to 1
-	    this.buttons.forEach(function(element){element.alpha = 1});
-
-	    //clear selection
-	    this.selectedItem = null;
 	},
+
 
 	update: function() 
 	{ 
@@ -227,8 +187,6 @@ var GameState={
 			this.restartBackgrund.clicked = false;
 			this.restartBackgrund.inputEnabled = true;
 	    	this.restartBackgrund.events.onInputDown.add(this.gameOver,this);
-
-	    	//this.game.time.events.add(2000, this.gameOver, this);
 	    }
 	},
 	
@@ -240,8 +198,23 @@ var GameState={
 			this.game.state.restart();
 		}
 
+    },
 
 
+    clickOnActionFood_destroy: function()
+    {
+    		this.food_background.destroy();
+    		this.food3.clicked = false;
+    		
+    		this.foodicon = [this.apple_count, this.banana_count, this.bambooshoot_count, this.lettuce_count];
+    		this.foodtext = [this.appleText_count, this.bananaText_count, this.bambooshootText_count, this.lettuceText_count];
+    		this.numberCountText = [this.number_of_apple_text, this.number_of_banana_text, this.number_of_bamboshoot_text, this.number_of_lettuce_text]
+    		for (i = 0; i < 4; i++) 
+    		{ 
+    			this.foodicon[i].destroy();
+    			this.foodtext[i].destroy();
+    			this.numberCountText[i].destroy();
+			}
     },
 
 
@@ -249,21 +222,13 @@ var GameState={
 	{
 		if(this.food3.clicked)
 		{
-    		this.food_background.destroy();
-    		this.food3.clicked = false;
-    		
-    		this.foodicon = [this.apple_count, this.banana_count, this.bambooshoot_count, this.lettuce_count];
-    		this.foodtext = [this.appleText_count, this.bananaText_count, this.bambooshootText_count, this.lettuceText_count];
-
-    		for (i = 0; i < 4; i++) 
-    		{ 
-    			this.foodicon[i].destroy();
-    			this.foodtext[i].destroy();
-			}
-
+			this.clickOnActionFood_destroy();
 		}
 		else
 		{
+			this.clickOnAction_destroy_all();
+
+
 	 		this.food_background = this.game.add.sprite(180,495,'food_backgrounds');
 	    	this.food_background.anchor.setTo(0.5);
 	    	this.food3.clicked = true; 
@@ -276,37 +241,33 @@ var GameState={
 
 	    	    this.apple_count = this.game.add.sprite(80, 480, 'apple_count');
 			    this.apple_count.anchor.setTo(0.5);
-			    this.apple_count.customParams = {health: 20, coin: -50};
 			    this.apple_count.inputEnabled = true;
-			    this.apple_count.events.onInputDown.add(this.pickItem, this);	
+			    this.apple_count.clicked = false;
+			    this.apple_count.events.onInputDown.add(this.use_apple, this);	
 
 			    this.banana_count = this.game.add.sprite(135,480, 'banana_count');
 			    this.banana_count.anchor.setTo(0.5);
-			    this.banana_count.customParams = { health: 15, coin: -40};
 			    this.banana_count.inputEnabled = true;
-			    this.banana_count.events.onInputDown.add(this.pickItem, this);
+			    this.banana_count.events.onInputDown.add(this.use_banana, this);
 
 			    this.bambooshoot_count = this.game.add.sprite(200,480, 'bambooshoot_count');
 			    this.bambooshoot_count.anchor.setTo(0.5);
 			    this.bambooshoot_count.customParams = { health: 10, coin: -30 };
 			    this.bambooshoot_count.inputEnabled = true;
-			    this.bambooshoot_count.events.onInputDown.add(this.pickItem, this);
+			    this.bambooshoot_count.events.onInputDown.add(this.use_bambooshoot, this);
 
 			    this.lettuce_count = this.game.add.sprite(270, 480, 'lettuce_count');
 			    this.lettuce_count.anchor.setTo(0.5);
 			    this.lettuce_count.customParams = {health: 50, coin: -60};
 			    this.lettuce_count.inputEnabled = true;
-			    this.lettuce_count.events.onInputDown.add(this.pickItem, this);
+			    this.lettuce_count.events.onInputDown.add(this.use_lettuce, this);
 
-			    var number_of_apple = 0;
-  				var number_of_banana = 0;
-  				var number_of_bamboshoot = 0;
-  				var number_of_lettuce = 0;
+
 
   				this.number_of_apple_text = this.game.add.text(84,480, "" + number_of_apple, countnuberstyle_number);
   				this.number_of_banana_text = this.game.add.text(139,481, "" + number_of_banana, countnuberstyle_number);
   				this.number_of_bamboshoot_text = this.game.add.text(204,481, "" + number_of_bamboshoot, countnuberstyle_number);
-  				this.nnumber_of_lettuce_text = this.game.add.text(274,481, "" + number_of_lettuce, countnuberstyle_number);
+  				this.number_of_lettuce_text = this.game.add.text(274,481, "" + number_of_lettuce, countnuberstyle_number);
 
 			    var foodstyle = { font: "bold 8pt Arial", fill: "#000"};
 			     	foodstyle.stroke = "#fff";
@@ -319,10 +280,8 @@ var GameState={
 		}
 	},
 
-	clickOnActionCloths: function()
+	clickOnActionCloths_destroy : function()
 	{
-		if(this.cloths.clicked)
-		{
 			this.cloths_background.destroy();
 			this.cloths.clicked = false;
 
@@ -334,11 +293,20 @@ var GameState={
     			this.clothsButton[i].destroy();
     			this.clothsText[i].destroy();
 			}
+	},
 
-
+	clickOnActionCloths: function()
+	{
+		if(this.cloths.clicked)
+		{
+			this.clickOnActionCloths_destroy();
 		}
 		else
 		{
+
+			this.clickOnAction_destroy_all();
+
+
 			this.cloths_background = this.game.add.sprite(180,495,'cloths_background');
 			this.cloths_background.anchor.setTo(0.5);
 			this.cloths.clicked = true;
@@ -393,10 +361,9 @@ var GameState={
 		}
 	},
 	
-	clickOnActionShop: function()
+
+	clickOnActionShop_destroy: function()
 	{
-		if(this.shop.clicked)
-		{
 			this.shop_background.destroy();
 			this.shop.clicked = false;
 
@@ -410,10 +377,19 @@ var GameState={
     			this.foodtextShop[i].destroy();
     			this.pcfoodShop[i].destroy();
 			}
+	},
 
+	clickOnActionShop: function()
+	{
+		if(this.shop.clicked)
+		{
+			this.clickOnActionShop_destroy();
 		}
 		else
 		{
+
+			this.clickOnAction_destroy_all();
+
 			this.shop_background = this.game.add.sprite(180,495,'shop_background');
 			this.shop_background.anchor.setTo(0.5);
 			this.shop.clicked = true;
@@ -462,14 +438,31 @@ var GameState={
 	{
 		if(this.pet.customParams.coin >= 50)
 		{
-			this.pet.customParams.coin -= 50;
-			this.refreshStats();
-		}
-		else
-		{
+
 			var buyitemsText = {font: "bold 16pt Arial", fill: "#fff"};
 				buyitemsText.stroke = "#A4CED9";
 				buyitemsText.strokeThickness = 5;
+
+			if(number_of_apple < 9)
+			{
+				this.pet.customParams.coin -= 50;
+
+				number_of_apple++; 
+
+				this.refreshStats();
+			}
+			else
+			{
+			
+			this.buyitems_apple_error = this.game.add.text(35,100, "No slot in bag for buy Apple", buyitemsText);
+				
+				this.game.add.tween(this.buyitems_apple_error)
+                .to({alpha: 0}, 1000, Phaser.Easing.Default, true, 3000);
+			}
+
+		}
+		else
+		{
 
 			this.PriceAppleBuyItems = this.game.add.text(80,100, "No coin for buy Apple", buyitemsText);
 
@@ -483,8 +476,28 @@ var GameState={
 	{
 		if(this.pet.customParams.coin >= 40)
 		{
-			this.pet.customParams.coin -= 40;
-			this.refreshStats();
+
+			var buyitemsText = {font: "bold 16pt Arial", fill: "#fff"};
+				buyitemsText.stroke = "#A4CED9";
+				buyitemsText.strokeThickness = 5;
+
+			if(number_of_banana < 9)
+			{
+				this.pet.customParams.coin -= 40;
+
+				number_of_banana++;
+
+				this.refreshStats();
+			}
+			else
+			{
+			
+			this.buyitems_banana_error = this.game.add.text(24,100, "No slot in bag for buy Banana", buyitemsText);
+				
+				this.game.add.tween(this.buyitems_banana_error)
+                .to({alpha: 0}, 1000, Phaser.Easing.Default, true, 3000);
+			}
+
 		}
 		else
 		{
@@ -505,8 +518,27 @@ var GameState={
 	{
 		if(this.pet.customParams.coin >= 30)
 		{
-			this.pet.customParams.coin -= 30;
-			this.refreshStats();
+			var buyitemsText = {font: "bold 16pt Arial", fill: "#fff", align: "center"};
+				buyitemsText.stroke = "#A4CED9";
+				buyitemsText.strokeThickness = 5;
+
+			if(number_of_bamboshoot < 9)
+			{
+				this.pet.customParams.coin -= 30;
+
+				number_of_bamboshoot++;
+
+				this.refreshStats();
+			}
+			else
+			{
+			
+			this.buyitems_bambooshoot_error = this.game.add.text(80,100, "No slot in bag for\nbuy Bamboo Shoot", buyitemsText);
+				
+				this.game.add.tween(this.buyitems_bambooshoot_error)
+                .to({alpha: 0}, 1000, Phaser.Easing.Default, true, 3000);
+			}
+
 		}
 		else
 		{
@@ -514,7 +546,7 @@ var GameState={
 				buyitemsText.stroke = "#A4CED9";
 				buyitemsText.strokeThickness = 5;
 
-			this.PriceBambooshootBuyItems = this.game.add.text(30,100, "No coin for buy bamboo Shoot", buyitemsText);
+			this.PriceBambooshootBuyItems = this.game.add.text(30,100, "No coin for buy Bamboo Shoot", buyitemsText);
 
 				this.game.add.tween(this.PriceBambooshootBuyItems)
                 .to({alpha: 0}, 1000, Phaser.Easing.Default, true, 3000);
@@ -526,8 +558,28 @@ var GameState={
 	{
 		if(this.pet.customParams.coin >= 60)
 		{
-			this.pet.customParams.coin -= 60;
-			this.refreshStats();
+
+			var buyitemsText = {font: "bold 16pt Arial", fill: "#fff"};
+				buyitemsText.stroke = "#A4CED9";
+				buyitemsText.strokeThickness = 5;
+
+			if(number_of_lettuce < 9)
+			{
+				this.pet.customParams.coin -= 60;
+
+				number_of_lettuce++;
+
+				this.refreshStats();
+			}
+			else
+			{
+			
+			this.buyitems_lettuce_error = this.game.add.text(30,100, "No slot in bag for buy Lettuce", buyitemsText);
+				
+				this.game.add.tween(this.buyitems_lettuce_error)
+                .to({alpha: 0}, 1000, Phaser.Easing.Default, true, 3000);
+			}
+
 		}
 		else
 		{
@@ -545,19 +597,27 @@ var GameState={
 
 	},
 
-	clickOnActionGames: function()
+	clickOnActionGames_destroy: function()
 	{
-		if(this.games.clicked)
-		{
 			this.games_background.destroy();
 			this.games.clicked = false;
 
 			this.tictactoe.destroy();
 			this.tictactoeText.destroy();
 			this.PointtictactoeText.destroy();
+	},
+
+	clickOnActionGames: function()
+	{
+		if(this.games.clicked)
+		{
+			this.clickOnActionGames_destroy();
 		}
 		else
 		{
+
+			this.clickOnAction_destroy_all();
+
 			this.games_background = this.game.add.sprite(180,495,'games_background');
 			this.games_background.anchor.setTo(0.5);
 			this.games.clicked = true;
@@ -629,6 +689,147 @@ var GameState={
 		}
 	},
 	
+	clickOnAction_destroy_all: function()
+	{
+
+		if(this.food3.clicked)
+		{
+			this.clickOnActionFood_destroy();
+		}
+		else if(this.cloths.clicked)
+		{
+			this.clickOnActionCloths_destroy();
+		}
+		else if(this.shop.clicked)
+		{
+			this.clickOnActionShop_destroy();
+		}
+		else if(this.games.clicked)
+		{
+			this.clickOnActionGames_destroy();
+		}
+
+	},
+
+	use_apple: function()
+	{
+		if(!this.apple_count.clicked)
+		{
+			
+			var buyitemsText = {font: "bold 16pt Arial", fill: "#fff"};
+				buyitemsText.stroke = "#A4CED9";
+				buyitemsText.strokeThickness = 5;
+
+			if(number_of_apple > 0)
+			{
+				this.pet.customParams.health += 50;
+				number_of_apple--;
+				this.refreshStats();
+				this.clickOnActionFood_destroy();
+				this.clickOnActionFood();
+			}
+			else
+			{
+
+				this.use_apple_error = this.game.add.text(30,100, "You don't have enough apply", buyitemsText);
+				
+				this.game.add.tween(this.use_apple_error)
+                	.to({alpha: 0}, 1000, Phaser.Easing.Default, true, 3000);
+			}
+
+
+		}
+	},
+
+	use_banana: function()
+	{
+		if(!this.banana_count.clicked)
+		{
+			
+			var buyitemsText = {font: "bold 16pt Arial", fill: "#fff"};
+				buyitemsText.stroke = "#A4CED9";
+				buyitemsText.strokeThickness = 5;
+
+			if(number_of_banana > 0)
+			{
+				this.pet.customParams.health += 40;
+				number_of_banana--;
+				this.refreshStats();
+				this.clickOnActionFood_destroy();
+				this.clickOnActionFood();
+			}
+			else
+			{
+
+				this.use_banana_error = this.game.add.text(25,100, "You don't have enough banana", buyitemsText);
+				
+				this.game.add.tween(this.use_banana_error)
+                	.to({alpha: 0}, 1000, Phaser.Easing.Default, true, 3000);
+			}
+
+
+		}
+	},
+
+	use_bambooshoot: function()
+	{
+		if(!this.bambooshoot_count.clicked)
+		{
+			
+			var buyitemsText = {font: "bold 16pt Arial", fill: "#fff", align: "center"};
+				buyitemsText.stroke = "#A4CED9";
+				buyitemsText.strokeThickness = 5;
+
+			if(number_of_bamboshoot > 0)
+			{
+				this.pet.customParams.health += 30;
+				number_of_bamboshoot--;
+				this.refreshStats();
+				this.clickOnActionFood_destroy();
+				this.clickOnActionFood();
+			}
+			else
+			{
+
+				this.use_bambooshoot_error = this.game.add.text(60,100, "You don't have enough\n bamboo shoot", buyitemsText);
+				
+				this.game.add.tween(this.use_bambooshoot_error)
+                	.to({alpha: 0}, 1000, Phaser.Easing.Default, true, 3000);
+			}
+
+
+		}
+	},
+
+	use_lettuce: function()
+	{
+		if(!this.lettuce_count.clicked)
+		{
+			
+			var buyitemsText = {font: "bold 16pt Arial", fill: "#fff", align: "center"};
+				buyitemsText.stroke = "#A4CED9";
+				buyitemsText.strokeThickness = 5;
+
+			if(number_of_lettuce > 0)
+			{
+				this.pet.customParams.health += 60;
+				number_of_lettuce--;
+				this.refreshStats();
+				this.clickOnActionFood_destroy();
+				this.clickOnActionFood();
+			}
+			else
+			{
+
+				this.use_lettuce_error = this.game.add.text(30,100, "You don't have enough lettuce", buyitemsText);
+				
+				this.game.add.tween(this.use_lettuce_error)
+                	.to({alpha: 0}, 1000, Phaser.Easing.Default, true, 3000);
+			}
+
+
+		}
+	},
 };
 
 var game = new Phaser.Game(360,640,Phaser.AUTO);
