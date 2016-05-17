@@ -140,15 +140,6 @@ var GameState={
 
 	},
 
- 	pickItem: function() 
-  	{
-
-
-
-  	},
-
-
-
 	placeItem: function() 
 	{
 
