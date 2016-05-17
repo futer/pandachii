@@ -52,12 +52,13 @@ var GameState={
     this.background.events.onInputDown.add(this.placeItem, this);
 
     this.pet = this.game.add.sprite(180, 380, 'pet1',0);
-    this.pet.animations.add('funnyfaces', [0, 1, 2, 3, 2, 1, 0], 7, false);
-    this.pet.animations.add('eating', [0,1,0,1,0,1,0], 7, false);
     this.pet.anchor.setTo(0.5);
 
     //custom properties of the pet
     this.pet.customParams = {health: 100, fun: 100, coin: 800};
+
+
+	var eating = this.pet.animations.add('eating', [0,1,0,1,0,1,0], 7, true);
 
     //draggable pet
     this.pet.inputEnabled = true;
@@ -715,6 +716,8 @@ var GameState={
 				this.pet.customParams.health += 50;
 				number_of_apple--;
 				this.refreshStats();
+				this.pet.animations.play('eating', 8, false);
+
 				this.clickOnActionFood_destroy();
 				this.clickOnActionFood();
 			}
@@ -745,6 +748,7 @@ var GameState={
 				this.pet.customParams.health += 40;
 				number_of_banana--;
 				this.refreshStats();
+				this.pet.animations.play('eating', 8, false);
 				this.clickOnActionFood_destroy();
 				this.clickOnActionFood();
 			}
@@ -775,6 +779,7 @@ var GameState={
 				this.pet.customParams.health += 30;
 				number_of_bamboshoot--;
 				this.refreshStats();
+				this.pet.animations.play('eating', 8, false);
 				this.clickOnActionFood_destroy();
 				this.clickOnActionFood();
 			}
@@ -805,6 +810,7 @@ var GameState={
 				this.pet.customParams.health += 60;
 				number_of_lettuce--;
 				this.refreshStats();
+				this.pet.animations.play('eating', 8, false);
 				this.clickOnActionFood_destroy();
 				this.clickOnActionFood();
 			}
