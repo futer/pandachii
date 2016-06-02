@@ -2,7 +2,7 @@ var number_of_apple = 0;
 var number_of_banana = 1;
 var number_of_bamboshoot = 1;
 var number_of_lettuce = 1;
-
+var panda_name;
 var GameState={
 
   preload: function()
@@ -23,11 +23,13 @@ var GameState={
     this.game.load.image('shop', 'img/shop.png');
     this.game.load.image('cloths','img/cloths.png');
     this.game.load.image('game_icon', 'img/game.png');
+
     this.game.load.image('apple', 'img/apple.png');
     this.game.load.image('banana', 'img/banana.png');
     this.game.load.image('bambooshoot', 'img/bambooshoot.png');
     this.game.load.image('lettuce', 'img/lettuce.png');
     this.game.load.image('tictactoe', 'img/tictactoe.png');
+    this.game.load.image('brickdest', 'img/brick_destroyer.png');
     this.game.load.image('black_hat', 'img/black_hat.png');
     this.game.load.image('blue_pants', 'img/blue_pants.png');
     this.game.load.image('blue_shirt', 'img/blue_shirt.png');
@@ -37,6 +39,9 @@ var GameState={
     this.game.load.image('bambooshoot_count', 'img/bambooshoot_count.png');
     this.game.load.image('banana_count', 'img/banana_count.png');
     this.game.load.image('lettuce_count', 'img/lettuce_count.png');
+    this.game.load.image('bgtry', 'img/black_show_try.png');
+    this.game.load.image('exiticon', 'img/exit.png');
+
 
     this.load.spritesheet('pet1', 'img/pet.png', 115, 140, 5);
     this.load.spritesheet('pet_black_hat', 'img/pet_black_hat.png', 115, 173, 5);
@@ -45,26 +50,27 @@ var GameState={
     this.load.spritesheet('pet_blue_tshirt', 'img/pet_blue_tshirt.png', 115, 140, 5);
   },
 
+
+
   create: function()
   {
    	this.background = this.game.add.sprite(0,0, 'backyard');
     this.background.inputEnabled = true;
     this.background.events.onInputDown.add(this.placeItem, this);
 
+    this.set_name();
+    
     this.pet = this.game.add.sprite(180, 380, 'pet1',0);
     this.pet.anchor.setTo(0.5);
 
     //custom properties of the pet
-    this.pet.customParams = {health: 100, fun: 100, coin: 800};
+    this.pet.customParams = {health: 100, fun: 100, coin: 1000};
 
 	var eating = this.pet.animations.add('eating', [0,1,0,1,0,1,0], 7, true);
 
     //draggable pet
     this.pet.inputEnabled = true;
     this.pet.input.enableDrag();
-
-
-
 
     //Physxic add
 
@@ -215,7 +221,14 @@ var GameState={
 
     	if (flaga2)
     	{
-			this.pet.customParams.fun += 20;  	
+    		if(this.pet.customParams.fun > 100)
+    		{
+    			this.pet.customParams.fun = 100;
+    		}
+    		else
+    		{
+    			this.pet.customParams.fun += 1;  	
+    		}
 		}
 
 	},
@@ -341,8 +354,11 @@ var GameState={
 			this.cloths_background.anchor.setTo(0.5);
 			this.cloths.clicked = true;
 
-			var clothstyle = { font: "10px Arial", fill: "#000"};
+			var clothstyle = { font: "bold 8pt Arial", fill: "#000"};
+			     	clothstyle.stroke = "#fff";
+    			 	clothstyle.strokeThickness = 2;
 
+					
 				//Black Hat
 
 				this.black_hat = this.game.add.sprite(80, 480, 'black_hat');
@@ -363,7 +379,7 @@ var GameState={
 			    this.blue_pants.events.onInputDown.add(this.clickOnActionClothsChangePants, this);
 			    this.blue_pants.clicked = false;
 
-			    this.blue_pantsText = this.game.add.text(110,500, 'Blue Pants', clothstyle);
+			    this.blue_pantsText = this.game.add.text(101,500, 'Blue Pants', clothstyle);
 
 			    //Blue Tie
 
@@ -374,7 +390,7 @@ var GameState={
 			    this.blue_tie.events.onInputDown.add(this.clickOnActionClothsChangeTie, this);
 			    this.blue_tie.clicked = false;
 
-			    this.blue_tieText = this.game.add.text(180,500, 'Blue Tie', clothstyle);
+			    this.blue_tieText = this.game.add.text(177,500, 'Blue Tie', clothstyle);
 
 			    //Blue T-Shirt
 
@@ -385,7 +401,7 @@ var GameState={
 			    this.blue_shirt.events.onInputDown.add(this.clickOnActionClothsChangeTshirt,this);
 			    this.blue_shirt.clicked = false;
 
-			    this.blue_shirtText = this.game.add.text(245,500, 'Blue T-Shirt', clothstyle);
+			    this.blue_shirtText = this.game.add.text(240,500, 'Blue T-Shirt', clothstyle);
 
 
 		}
@@ -455,7 +471,7 @@ var GameState={
 			    this.bananaText = this.game.add.text(115,500, "Banana", foodstyle);
 			    this.PricebananaText = this.game.add.text(117, 510, "PC: 40", foodstyle);
 
-			    this.bambooshootText = this.game.add.text(170,500, "Bamboo Shoot", foodstyle);
+			    this.bambooshootText = this.game.add.text(165,500, "Bamboo Shoot", foodstyle);
 			    this.PricebambooshootText = this.game.add.text(185, 510, "PC: 30", foodstyle);
 
 			    this.lettuceText = this.game.add.text(255,500, "Lettuce", foodstyle);
@@ -631,9 +647,8 @@ var GameState={
 			this.games_background.destroy();
 			this.games.clicked = false;
 
-			this.tictactoe.destroy();
-			this.tictactoeText.destroy();
-			this.PointtictactoeText.destroy();
+			this.brickdest.destroy();
+			this.brickdestText.destroy();
 	},
 
 	clickOnActionGames: function()
@@ -651,14 +666,18 @@ var GameState={
 			this.games_background.anchor.setTo(0.5);
 			this.games.clicked = true;
 
-				this.tictactoe = this.game.add.sprite(80, 480, 'tictactoe');
-			    this.tictactoe.anchor.setTo(0.5);
-			    this.tictactoe.inputEnabled = true;
+				this.brickdest = this.game.add.sprite(85, 480, 'brickdest');
+			    this.brickdest.anchor.setTo(0.5);
+			    this.brickdest.inputEnabled = true;
 
-			    var gamestyle = { font: "10px Arial", fill: "#000"};
+			    this.brickdest.events.onInputDown.add(this.showtry, this);	
 
-			    this.tictactoeText = this.game.add.text(58, 500, "TicTacToe", gamestyle);
-			    this.PointtictactoeText = this.game.add.text(63, 510, "", gamestyle);
+			    var gamestyle = { font: "bold 8pt Arial", fill: "#000"};
+			     	gamestyle.stroke = "#fff";
+    			 	gamestyle.strokeThickness = 2;
+
+
+			    this.brickdestText = this.game.add.text(58, 500, "Brick Des", gamestyle);
 		}
 	},
 
@@ -751,13 +770,22 @@ var GameState={
 
 			if(number_of_apple > 0)
 			{
-				this.pet.customParams.health += 50;
-				number_of_apple--;
-				this.refreshStats();
-				this.pet.animations.play('eating', 8, false);
+				
+				if(this.pet.customParams.health > 100)
+				{
+					this.pet.customParams.health = 100;
+					this.refreshStats();
+				}
+				else
+				{
+					this.pet.customParams.health += 10;
+					number_of_apple--;
+					this.refreshStats();
+					this.pet.animations.play('eating', 8, false);
 
-				this.clickOnActionFood_destroy();
-				this.clickOnActionFood();
+					this.clickOnActionFood_destroy();
+					this.clickOnActionFood();		
+				}
 			}
 			else
 			{
@@ -783,12 +811,20 @@ var GameState={
 
 			if(number_of_banana > 0)
 			{
-				this.pet.customParams.health += 40;
-				number_of_banana--;
-				this.refreshStats();
-				this.pet.animations.play('eating', 8, false);
-				this.clickOnActionFood_destroy();
-				this.clickOnActionFood();
+				if(this.pet.customParams.health > 100)
+				{
+					this.pet.customParams.health = 100;
+					this.refreshStats();
+				}
+				else
+				{
+					this.pet.customParams.health += 5;
+					number_of_banana--;
+					this.refreshStats();
+					this.pet.animations.play('eating', 8, false);
+					this.clickOnActionFood_destroy();
+					this.clickOnActionFood();
+				}	
 			}
 			else
 			{
@@ -814,12 +850,20 @@ var GameState={
 
 			if(number_of_bamboshoot > 0)
 			{
-				this.pet.customParams.health += 30;
-				number_of_bamboshoot--;
-				this.refreshStats();
-				this.pet.animations.play('eating', 8, false);
-				this.clickOnActionFood_destroy();
-				this.clickOnActionFood();
+				if(this.pet.customParams.health > 100)
+				{
+					this.pet.customParams.health = 100;
+					this.refreshStats();
+				}
+				else
+				{
+					this.pet.customParams.health += 15;
+					number_of_bamboshoot--;
+					this.refreshStats();
+					this.pet.animations.play('eating', 8, false);
+					this.clickOnActionFood_destroy();
+					this.clickOnActionFood();
+				}	
 			}
 			else
 			{
@@ -845,12 +889,20 @@ var GameState={
 
 			if(number_of_lettuce > 0)
 			{
-				this.pet.customParams.health += 60;
-				number_of_lettuce--;
-				this.refreshStats();
-				this.pet.animations.play('eating', 8, false);
-				this.clickOnActionFood_destroy();
-				this.clickOnActionFood();
+				if(this.pet.customParams.health > 100)
+				{
+					this.pet.customParams.health = 100;
+					this.refreshStats();
+				}
+				else
+				{
+					this.pet.customParams.health += 15;
+					number_of_lettuce--;
+					this.refreshStats();
+					this.pet.animations.play('eating', 8, false);
+					this.clickOnActionFood_destroy();
+					this.clickOnActionFood();
+				}
 			}
 			else
 			{
@@ -864,6 +916,29 @@ var GameState={
 
 		}
 	},
+
+	set_name: function()
+	{
+		var background_set_name = new Phaser.Rectangle(0,0, 600, 550);
+
+	},
+
+	showtry: function()
+	{
+	    this.bgTry = game.add.sprite(0, 0, 'bgtry');
+	    this.exiticotn = game.add.sprite(330,10, 'exiticon');
+	    this.exiticotn.inputEnabled = true;
+
+		this.exiticotn.events.onInputDown.add(this.destroyTry, this);	
+
+	},
+
+
+destroyTry: function()	
+		{
+			this.bgTry.destroy();
+			this.exiticotn.destroy();
+		}	
 };
 
 var game = new Phaser.Game(360,640,Phaser.AUTO);

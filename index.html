@@ -11,38 +11,47 @@
 
 <body> 
 
+
 	<div id="main" style="display: block;">
 	<center>
 	<img src="img/background.png"/><br/><br/>
 	<a href='#' id='mylink'><img src="img/button_start.png"/></a>
 	</center>
 	</div>
+			<script type="text/javascript">
 
+				var myLink = document.getElementById('mylink');
+				
+				myLink.onclick = function(){
+				var hide = document.getElementById('main').style.display = 'none' ;
+				var hide = document.getElementById('main2').style.display = 'none' ;
 
-	
+				    var script = document.createElement("script");
+				    script.type = "text/javascript";
+				    script.src = "js/main.js"; 
+				    document.getElementsByTagName("head")[0].appendChild(script);
+				    return false;
+				}
+			</script>
+    <div id="main2" style="display: block;">
+			<a href='#' id='mylink2'><img src="img/button_start.png"/></a>
+	</center>
+	</div>
+			<script type="text/javascript">
 
+				var myLink2 = document.getElementById('mylink2');
+				
+				myLink2.onclick = function(){
+				var hide = document.getElementById('main').style.display = 'none' ;
+				var hide = document.getElementById('main2').style.display = 'none' ;
 
-
-
-	<script type="text/javascript">
-
-	var myLink = document.getElementById('mylink');
-	
-	myLink.onclick = function(){
-	var hide = document.getElementById('main').style.display = 'none' ;
-
-	    var script = document.createElement("script");
-	    script.type = "text/javascript";
-	    script.src = "js/main.js"; 
-	    document.getElementsByTagName("head")[0].appendChild(script);
-	    return false;
-
-
-	}
-
-
-	</script>
-
+				    var script = document.createElement("script");
+				    script.type = "text/javascript";
+				    script.src = "js/brick-destroy.js"; 
+				    document.getElementsByTagName("head")[0].appendChild(script);
+				    return false;
+				}
+			</script>
 </body> 
 
 </html>
